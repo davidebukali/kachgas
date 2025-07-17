@@ -4,10 +4,11 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/contants';
+import { AuthGuard } from './guards/auth.guard';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, { provide: 'APP_GUARD', useClass: AuthGuard }],
   imports: [
     UsersModule,
     JwtModule.register({
