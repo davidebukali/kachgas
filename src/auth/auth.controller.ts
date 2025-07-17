@@ -4,13 +4,12 @@ import {
   Post,
   HttpCode,
   HttpStatus,
-  UseGuards,
   Get,
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './guards/auth.guard';
 import { RequestWithUser } from './types/auth.types';
+import { Public } from 'src/contants';
 
 @Controller('auth')
 export class AuthController {
@@ -22,9 +21,14 @@ export class AuthController {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
-  @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req: RequestWithUser) {
+    return req.user;
+  }
+
+  @Public()
+  @Get('all')
+  getAll(@Request() req: RequestWithUser) {
     return req.user;
   }
 }
