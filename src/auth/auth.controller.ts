@@ -12,7 +12,7 @@ import { RequestWithUser } from './types/auth.types';
 import { Public } from 'src/contants';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { SignInDto } from './dto/signin.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,10 +21,11 @@ export class AuthController {
     private usersService: UsersService,
   ) {}
 
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: LoginDto) {
-    return this.authService.signIn(signInDto.username);
+  signIn(@Body() signInBody: SignInDto) {
+    return this.authService.signIn(signInBody.email, signInBody.password);
   }
 
   @Public()
