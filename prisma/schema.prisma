@@ -19,6 +19,7 @@ model User {
   email       String   @unique
   phone       String?  @unique
   name        String
+  password    String
   role        Role     @default(USER)
   addressBook Address[]
   createdAt   DateTime @default(now())
