@@ -12,6 +12,8 @@ import { RequestWithUser } from './types/auth.types';
 import { Public } from 'src/contants';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { SignInDto } from './dto/signin.dto';
 
 @Controller('auth')
@@ -37,6 +39,23 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req: RequestWithUser) {
     return req.user;
+  }
+
+  @Public()
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(
+      resetPasswordDto.email,
+      resetPasswordDto.password,
+    );
   }
 
   @Public()
