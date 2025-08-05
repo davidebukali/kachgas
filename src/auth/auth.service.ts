@@ -91,7 +91,7 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    await this.usersService.updateUser({
+    await this.usersService.update({
       where: { email },
       data: { password: hashedPassword },
     });

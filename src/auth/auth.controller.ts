@@ -33,7 +33,7 @@ export class AuthController {
   @Public()
   @Post('register')
   register(@Body() registerBody: RegisterDto) {
-    return this.usersService.createUser(registerBody);
+    return this.usersService.create(registerBody);
   }
 
   @Get('profile')
