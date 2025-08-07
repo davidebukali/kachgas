@@ -15,15 +15,15 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  email       String   @unique
-  phone       String?  @unique
+  id          String    @id @default(cuid())
+  email       String    @unique
+  phone       String?   @unique
   name        String
   password    String
-  role        Role     @default(USER)
+  role        Role      @default(USER)
   addressBook Address[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum Role {
@@ -33,13 +33,60 @@ enum Role {
 }
 
 model Address {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  description     String
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  description String
+  latitude    Float
+  longitude   Float
+  active      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id        String           @id @default(cuid())
+  name      String
+  sizeKg    Float
+  basePrice Float
+  stations  ProductStation[]
+  Inventory Inventory[]
+  createdAt DateTime         @default(now())
+}
+
+model ProductStation {
+  id        String  @id @default(cuid())
+  station   Station @relation(fields: [stationId], references: [id])
+  stationId String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  price     Float
+}
+
+model Station {
+  id        String           @id @default(cuid())
+  brand     StationBrand
+  name      String
   latitude  Float
   longitude Float
-  active    Boolean   @default(false)
-  createdAt DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isActive  Boolean          @default(true)
+  openHours String?
+  inventory Inventory[]
+  products  ProductStation[]
+  createdAt DateTime         @default(now())
+}
+
+enum StationBrand {
+  SHELL
+  TOTAL
+}
+
+model Inventory {
+  id        String   @id @default(cuid())
+  station   Station  @relation(fields: [stationId], references: [id])
+  stationId String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  updatedAt DateTime @updatedAt
 }
