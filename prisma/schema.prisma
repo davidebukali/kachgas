@@ -47,6 +47,8 @@ model Address {
 model Product {
   id        String           @id @default(cuid())
   name      String
+  description String?
+  imageUrl  String?
   sizeKg    Float
   basePrice Float
   stations  ProductStation[]
@@ -67,6 +69,10 @@ model Station {
   id        String           @id @default(cuid())
   brand     StationBrand
   name      String
+  description String?
+  imageUrl  String?
+  address   String?
+  city      String?
   latitude  Float
   longitude Float
   isActive  Boolean          @default(true)
