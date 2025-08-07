@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { PrismaModule } from './shared/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserAddressModule } from './user-address/user-address.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserAddressModule } from './user-address/user-address.module';
     UsersModule,
     PrismaModule,
     UserAddressModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
